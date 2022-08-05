@@ -5,6 +5,7 @@ s" +" 2constant inst-plus
 s" -" 2constant inst-minus
 s" *" 2constant inst-mult
 s" /" 2constant inst-div
+s" =" 2constant inst-equals
 s" ." 2constant inst-dump
 
 4096 stack constant fox-stack
@@ -19,8 +20,15 @@ variable curr-word
 : parse-mult  fox-stack stack> fox-stack stack> * fox-stack >stack ;
 : parse-div   fox-stack stack> fox-stack stack> / fox-stack >stack ;
 
+: parse-equals
+    fox-stack stack> fox-stack stack> = if
+        1 fox-stack >stack
+    else
+        0 fox-stack >stack
+    then ;
+
 : parse-dump
-    fox-stack stack> . cr ;
+    fox-stack stack> . ;
 
 : parse ( tokens -- )
     0 ?do
@@ -36,12 +44,15 @@ variable curr-word
         dup 2@ inst-div str= if
             parse-div
         else
+        dup 2@ inst-equals str= if
+            parse-equals
+        else
         dup 2@ inst-dump str= if
             parse-dump
         else
         dup 2@ s" " str= if
         else
             dup 2@ s>n parse-push
-        then then then then then then
+        then then then then then then then
         1 curr-word +! cell+ cell+
     loop drop ;

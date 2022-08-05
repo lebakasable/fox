@@ -45,6 +45,7 @@ variable curr-line
             repeat
             file @ close-file
         endtry-iferror
+            cr
             1 arg type ." :"
             curr-line @ 1 + n>s type ." :"
             curr-word @ 1 + n>s type ." : "
