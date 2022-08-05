@@ -7,7 +7,9 @@ s" *" 2constant inst-mult
 s" /" 2constant inst-div
 s" ." 2constant inst-dump
 
-1024 stack constant fox-stack
+4096 stack constant fox-stack
+
+variable curr-word
 
 : parse-push ( n -- )
     fox-stack >stack ;
@@ -18,7 +20,7 @@ s" ." 2constant inst-dump
 : parse-div   fox-stack stack> fox-stack stack> / fox-stack >stack ;
 
 : parse-dump
-    fox-stack stack> . ;
+    fox-stack stack> . cr ;
 
 : parse ( tokens -- )
     0 ?do
@@ -41,5 +43,5 @@ s" ." 2constant inst-dump
         else
             dup 2@ s>n parse-push
         then then then then then then
-        cell+ cell+
+        1 curr-word +! cell+ cell+
     loop drop ;

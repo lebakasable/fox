@@ -37,7 +37,7 @@ variable curr-line
     else
         try
             1 arg r/o open-file swap file !
-            begin buf 100 file @ read-line rot dup line !
+            begin buf max-line file @ read-line rot dup line !
             while
                     buf line @ pad place
                     s"  " pad +place pad count -trailing s"  " split parse
@@ -45,7 +45,10 @@ variable curr-line
             repeat
             file @ close-file
         endtry-iferror
-            1 arg type ." :" curr-line @ 1 + . .error cr 1 (bye)
+            1 arg type ." :"
+            curr-line @ 1 + n>s type ." :"
+            curr-word @ 1 + n>s type ." : "
+            .error cr 1 (bye)
         then 2drop 2drop drop
         cr bye
     then ;

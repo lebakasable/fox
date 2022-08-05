@@ -29,7 +29,9 @@
 
 : s>n ( a u -- x )
     i-lit if exit then
-    s" Unexpected token '" pad place
-    ( token ) pad +place
-    s" '" pad +place
+    pad place
+    s" : unexpected token" pad +place
     pad count exception throw ;
+
+: n>s ( n -- addr c )
+    s>d <# #s #> ;
