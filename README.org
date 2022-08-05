@@ -1,0 +1,11 @@
+* fox
+
+A concatenative langugage written in a concatenative language!
+
+** Quick Start
+
+To run ~fox~, you need to install [[https://gforth.org/][GForth]].
+
+#+begin_src shell
+  $ ./bin/fox examples/arithmetics.fox
+#+end_src

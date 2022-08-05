@@ -1,0 +1,4 @@
+#! /usr/bin/env gforth
+warnings off
+include ../src/fox.4th
+fox
