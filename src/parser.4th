@@ -37,7 +37,9 @@ s" ." 2constant inst-dump
         dup 2@ inst-dump str= if
             parse-dump
         else
+        dup 2@ s" " str= if
+        else
             dup 2@ s>n parse-push
-        then then then then then
+        then then then then then then
         cell+ cell+
     loop drop ;

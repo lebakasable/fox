@@ -16,6 +16,11 @@ include parser.4th
     ." Flags:" cr
     ."   --help      Print this help message." cr ;
 
+create buf max-line allot
+variable file
+variable line
+variable curr-line
+
 : fox
     argc @ 1 = if
         outfile-id
@@ -31,9 +36,16 @@ include parser.4th
         bye
     else
         try
-            1 arg slurp-file s"  " split parse
+            1 arg r/o open-file swap file !
+            begin buf 100 file @ read-line rot dup line !
+            while
+                    buf line @ pad place
+                    s"  " pad +place pad count -trailing s"  " split parse
+                    1 curr-line +!
+            repeat
+            file @ close-file
         endtry-iferror
-            1 arg type ." : " .error cr 1 (bye)
-        then
+            1 arg type ." :" curr-line @ 1 + . .error cr 1 (bye)
+        then 2drop 2drop drop
         cr bye
     then ;
