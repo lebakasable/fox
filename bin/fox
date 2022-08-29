@@ -1,4 +1,31 @@
 #! /usr/bin/env gforth
+
 warnings off
+
 include ../src/fox.4th
-fox
+include ../src/utils.4th
+
+: usage
+  ." Usage: [-h] <input.fox>" cr
+  ." Flags:" cr
+  ."   --help, -h        Print this help message." cr ;
+
+: check-args
+  argc @ 2 < if
+    to-stderr
+      usage
+      ." ERROR: Input file not provided." cr
+    end-stderr
+    1 (bye)
+  then
+  1 arg s" --help" str=
+  1 arg s" -h" str= or if
+    usage
+    bye
+  then ;
+
+check-args 
+1 arg fox 
+
+clear-stack
+cr bye
